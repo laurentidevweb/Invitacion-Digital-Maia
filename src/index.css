@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Ballet&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+}
+
+.xv-name {
+  font-family: "Ballet", cursive;
+  font-weight: 400;
+  color: #e3e8f0;
+  background: linear-gradient(
+    120deg,
+    #9da9ba,
+    #ffffff 35%,
+    #c4cbd6 60%,
+    #f7f8ff 80%,
+    #aab5c6
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(173, 208, 255, 0.25));
+}

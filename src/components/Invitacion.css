@@ -1,0 +1,1146 @@
+/* ==========================================================
+   INVITACIÓN DE MAIA · MARIPOSAS AZULES
+   Todo va dentro de .invitacion para no tocar la portada.
+   Fotos: fondo2 (inicio) · fondo3 (música) · fondo4 (cierre)
+   ========================================================== */
+
+/* Cormorant Garamond en vertical (la portada solo carga la cursiva) */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap");
+
+.invitacion {
+  --azul-claro: #b8d9ff;
+  --azul: #75aef5;
+  --azul-noche: #071426;
+  --celeste: #65c9f4;
+  --cian: #5bc0f8;
+  --dorado: #e6ce82;
+  --texto-suave: #c6d5e8;
+  --oscuro: #040a18;
+  --claro: #eaf3ff;
+  --tinta: #131f45;
+  --azul-tinta: #2f56b8;
+  --gris-azul: #5a6988;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  background: var(--oscuro);
+  color: #f4f8ff;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+}
+
+.invitacion *,
+.invitacion *::before,
+.invitacion *::after {
+  box-sizing: border-box;
+}
+
+.invitacion .icono {
+  display: block;
+  flex: none;
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+/* ---------- Estructura de secciones ---------- */
+
+.invitacion .seccion-invitacion {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.invitacion .contenido-invitacion {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 44rem);
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.invitacion .en-vista .contenido-invitacion {
+  opacity: 1;
+  transform: none;
+}
+
+/* Secciones con foto */
+.invitacion .seccion-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 5rem 1.25rem;
+  background-color: var(--azul-noche);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.invitacion .seccion-foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(3, 12, 29, 0.25), transparent 70%),
+    linear-gradient(180deg, rgba(3, 12, 29, 0.58), rgba(3, 12, 29, 0.8));
+}
+
+.invitacion .seccion-presentacion { background-image: url("/fondo2.jpg"); }
+.invitacion .seccion-musica       { background-image: url("/fondo3.jpg"); }
+.invitacion .seccion-confirmacion { background-image: url("/fondo4.jpg"); }
+
+/* ---------- Separador entre secciones ---------- */
+
+.invitacion .separador-seccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.9rem;
+  padding: 1.1rem 1rem;
+  border-top: 1px solid rgba(184, 217, 255, 0.35);
+  border-bottom: 1px solid rgba(230, 206, 130, 0.35);
+  background: linear-gradient(90deg, #12285c, #1f3d86 50%, #12285c);
+  color: #e9f1ff;
+  font-size: clamp(0.55rem, 2.3vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+
+.invitacion .separador-seccion .icono {
+  width: 1em;
+  height: 1em;
+  color: var(--dorado);
+}
+
+/* ---------- Separador delicado: línea · mariposa · línea ---------- */
+
+.invitacion .separador-mariposa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: 0.6rem 1.5rem;
+  background: #071426;
+}
+
+.invitacion .linea-fina {
+  position: relative;
+  flex: 1;
+  max-width: 12rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 217, 255, 0.6));
+}
+
+.invitacion .linea-fina:last-child {
+  background: linear-gradient(270deg, transparent, rgba(184, 217, 255, 0.6));
+}
+
+.invitacion .linea-fina::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 4px;
+  height: 4px;
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--dorado);
+}
+
+.invitacion .linea-fina:last-child::after {
+  right: auto;
+  left: 0;
+}
+
+.invitacion .mariposa-sep {
+  flex: none;
+  display: block;
+  width: auto;
+  min-width: 1.8rem;
+  max-width: 4rem;
+  height: 1.8rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(117, 174, 245, 0.55));
+}
+
+/* ---------- Mariposas (imagen mariposa.png) ---------- */
+
+.invitacion .mariposa {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  height: auto;
+  pointer-events: none;
+  opacity: 0.9;
+  animation: flotar-mariposa 7s ease-in-out infinite alternate;
+}
+
+.invitacion .mariposa-a {
+  --giro: 14deg;
+  top: 9%;
+  right: 7%;
+  width: clamp(2.8rem, 10vw, 5rem);
+}
+
+.invitacion .mariposa-b {
+  --giro: -20deg;
+  bottom: 12%;
+  left: 6%;
+  width: clamp(1.8rem, 6vw, 3rem);
+  opacity: 0.75;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+
+@keyframes flotar-mariposa {
+  from { transform: translateY(0) rotate(var(--giro)); }
+  to   { transform: translateY(-14px) rotate(calc(var(--giro) + 7deg)); }
+}
+
+/* ---------- Tipografía sobre fotos (se mantiene) ---------- */
+
+.invitacion .subtitulo {
+  margin: 0;
+  color: var(--azul-claro);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 1.8;
+  text-shadow: 0 2px 8px #000;
+}
+
+.invitacion .nombre-maia {
+  margin: 0.4rem 0 0;
+  font-size: clamp(4rem, 14vw, 7.5rem);
+  line-height: 1.25;
+}
+
+.invitacion .quince {
+  margin: 0.5rem 0 1.5rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-style: italic;
+  font-weight: 500;
+  text-shadow: 0 2px 10px #000;
+}
+
+.invitacion .titulo-seccion {
+  margin: 0.6rem 0 1.4rem;
+  color: #f2e3bd;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.invitacion .frase-invitacion {
+  max-width: 34rem;
+  margin: 1.25rem auto 2rem;
+  color: #d5e1f1;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  font-style: italic;
+  line-height: 1.85;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.invitacion .icono-grande {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0 auto 1rem;
+}
+
+.invitacion .icono-cian {
+  color: var(--cian);
+}
+
+/* ---------- SECCIÓN 1: PRESENTACIÓN ---------- */
+
+.invitacion .seccion-presentacion {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 6rem clamp(1.25rem, 8vw, 7rem) 5.5rem;
+  text-align: left;
+}
+
+.invitacion .seccion-presentacion::before {
+  background: linear-gradient(
+    180deg,
+    rgba(3, 12, 29, 0.1) 0%,
+    rgba(3, 12, 29, 0.22) 40%,
+    rgba(3, 12, 29, 0.85) 100%
+  );
+}
+
+.invitacion .seccion-presentacion .contenido-invitacion {
+  width: min(100%, 30rem);
+  margin: 0;
+}
+
+.invitacion .seccion-presentacion .mariposa-a {
+  top: 17%;
+  right: 12%;
+}
+
+.invitacion .hero-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem clamp(1.25rem, 8vw, 7rem);
+}
+
+.invitacion .hero-logo {
+  color: var(--dorado);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.9rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.invitacion .hero-links {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.invitacion .hero-links a {
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-shadow: 0 1px 6px #000;
+  transition: color 0.25s ease;
+}
+
+.invitacion .hero-links a:hover {
+  color: var(--azul-claro);
+}
+
+.invitacion .hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px #000;
+}
+
+.invitacion .hero-linea {
+  display: block;
+  width: 2.6rem;
+  height: 1px;
+  background: var(--dorado);
+}
+
+.invitacion .seccion-presentacion .nombre-maia {
+  margin: 0.2rem 0 0 -0.6rem;
+  font-size: clamp(6rem, 30vw, 10rem);
+  line-height: 1.1;
+}
+
+.invitacion .hero-lema {
+  margin: 0.4rem 0 1.2rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-style: italic;
+  font-weight: 500;
+  text-shadow: 0 2px 10px #000;
+}
+
+.invitacion .hero-fecha {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 8px #000;
+}
+
+.invitacion .hero-fecha span {
+  color: var(--dorado);
+}
+
+.invitacion .hero-texto {
+  margin: 0 0 1.8rem;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  line-height: 1.9;
+  text-shadow: 0 2px 8px #000;
+}
+
+.invitacion .hero-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 48px;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--celeste);
+  color: var(--azul-noche);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(69, 182, 244, 0.25);
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+
+.invitacion .hero-boton:hover {
+  transform: translateY(-2px);
+  background: #8bd8fa;
+}
+
+.invitacion .hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  z-index: 1;
+  width: max-content;
+  max-width: 92%;
+  transform: translateX(-50%);
+  color: var(--texto-suave);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-shadow: 0 1px 6px #000;
+}
+
+.invitacion .hero-scroll:hover {
+  color: var(--dorado);
+}
+
+/* ---------- Textos de secciones claras y oscuras ---------- */
+
+.invitacion .eyebrow {
+  margin: 0;
+  color: var(--azul-tinta);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.invitacion .eyebrow-cian {
+  color: var(--cian);
+}
+
+.invitacion .titulo-claro {
+  margin: 0.8rem 0 0;
+  color: var(--tinta);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.2rem, 8.5vw, 3.4rem);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.invitacion .titulo-claro em {
+  font-style: italic;
+  background: linear-gradient(90deg, #3d5fc0 0%, #b9b8b0 65%, #e3c776 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.invitacion .texto-claro {
+  max-width: 28rem;
+  margin: 1.2rem auto 0;
+  color: #4a5878;
+  font-size: 0.92rem;
+  line-height: 1.9;
+}
+
+.invitacion .nota-claro {
+  margin: 0.9rem 0 0;
+  color: var(--gris-azul);
+  font-size: 0.78rem;
+}
+
+/* Decoración de las esquinas */
+.invitacion .esquina {
+  position: absolute;
+  z-index: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  color: #5b7fd6;
+  opacity: 0.85;
+}
+
+.invitacion .esquina-1 { top: 1.5rem; left: 1.3rem; }
+.invitacion .esquina-2 { top: 1.5rem; right: 1.3rem; }
+.invitacion .esquina-3 { bottom: 1.5rem; left: 1.3rem; }
+.invitacion .esquina-4 { bottom: 1.5rem; right: 1.3rem; }
+
+/* ---------- SECCIÓN 2: CUENTA REGRESIVA (clara) ---------- */
+
+.invitacion .seccion-cuenta {
+  padding: 5rem 1.25rem 5.5rem;
+  background: var(--claro);
+  color: var(--tinta);
+}
+
+.invitacion .cuenta-regresiva {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  width: min(100%, 27rem);
+  margin: 2.4rem auto 0;
+}
+
+.invitacion .bloque-tiempo {
+  min-width: 0;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid #aebfdf;
+}
+
+.invitacion .bloque-tiempo strong {
+  display: block;
+  color: var(--tinta);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.2rem, 9vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.invitacion .bloque-tiempo span {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--gris-azul);
+  font-size: clamp(0.5rem, 2.2vw, 0.66rem);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- SECCIÓN 3: DATOS (oscura) ---------- */
+
+.invitacion .seccion-datos {
+  padding: 4.5rem 1.5rem 5rem;
+  background-color: #030814;
+  background-image:
+    /* estrellas */
+    radial-gradient(circle at 12% 14%, rgba(184, 217, 255, 0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 9%, rgba(230, 206, 130, 0.9) 0 1.2px, transparent 2.4px),
+    radial-gradient(circle at 91% 38%, rgba(184, 217, 255, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 6% 47%, rgba(230, 206, 130, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 6%, rgba(184, 217, 255, 0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 52%, rgba(184, 217, 255, 0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 18% 81%, rgba(184, 217, 255, 0.8) 0 1.2px, transparent 2.4px),
+    radial-gradient(circle at 86% 88%, rgba(230, 206, 130, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 52% 95%, rgba(184, 217, 255, 0.6) 0 1px, transparent 2px),
+    /* resplandores */
+    radial-gradient(ellipse at 88% 8%, rgba(59, 120, 220, 0.34), transparent 55%),
+    radial-gradient(ellipse at 6% 96%, rgba(230, 206, 130, 0.13), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(18, 40, 92, 0.55), transparent 75%),
+    linear-gradient(180deg, #050d20, #030814 55%, #040b1b);
+  text-align: left;
+}
+
+/* Marco dorado fino, como el de una invitación impresa */
+.invitacion .seccion-datos::before {
+  content: "";
+  position: absolute;
+  inset: 0.8rem;
+  z-index: 0;
+  border: 1px solid rgba(230, 206, 130, 0.22);
+  border-radius: 1.4rem;
+  pointer-events: none;
+}
+
+/* Mariposas grandes y muy tenues de fondo */
+.invitacion .marca-agua {
+  position: absolute;
+  z-index: 0;
+  height: auto;
+  pointer-events: none;
+}
+
+.invitacion .marca-agua-a {
+  top: 3%;
+  right: -3rem;
+  width: clamp(14rem, 62vw, 26rem);
+  opacity: 0.16;
+  transform: rotate(16deg);
+}
+
+.invitacion .marca-agua-b {
+  bottom: 2%;
+  left: -2.5rem;
+  width: clamp(9rem, 40vw, 16rem);
+  opacity: 0.1;
+  transform: scaleX(-1) rotate(14deg);
+}
+
+.invitacion .seccion-datos .contenido-invitacion {
+  width: min(100%, 34rem);
+}
+
+.invitacion .titulo-oscuro {
+  margin: 1rem 0 1.4rem;
+  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.6rem, 11vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.invitacion .texto-oscuro {
+  margin: 0 0 1.8rem;
+  color: #98a6bd;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.invitacion .boton-contorno {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 48px;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.invitacion .boton-contorno .icono {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.invitacion .boton-contorno:hover {
+  border-color: var(--cian);
+  background: rgba(91, 192, 248, 0.1);
+}
+
+
+
+
+
+
+/* Programa de la noche */
+
+.invitacion .programa {
+  margin-top: 3rem;
+  padding: 1.9rem 1.6rem;
+  border: 1px solid rgba(184, 217, 255, 0.16);
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    160deg,
+    rgba(31, 61, 134, 0.28),
+    rgba(255, 255, 255, 0.02) 60%
+  );
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.invitacion .programa-fecha {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(184, 217, 255, 0.16);
+}
+
+.invitacion .fecha-dia {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 4.6rem;
+  font-weight: 500;
+  line-height: 0.9;
+  background: linear-gradient(160deg, #f6e7b6, var(--dorado) 55%, #b99a4c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.invitacion .programa-fecha p {
+  margin: 0;
+  color: #c6d5e8;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 2;
+}
+
+.invitacion .linea-tiempo {
+  margin: 1.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.invitacion .linea-tiempo li {
+  position: relative;
+  padding: 0 0 1.9rem 1.8rem;
+}
+
+.invitacion .linea-tiempo li:last-child {
+  padding-bottom: 0;
+}
+
+.invitacion .linea-tiempo li::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: 0;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1.5px solid var(--cian);
+  border-radius: 50%;
+  background: var(--oscuro);
+}
+
+.invitacion .linea-tiempo li::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: -0.2rem;
+  left: 0.35rem;
+  width: 1px;
+  background: linear-gradient(var(--cian), rgba(91, 192, 248, 0.12));
+}
+
+.invitacion .linea-tiempo li:last-child::after {
+  display: none;
+}
+
+.invitacion .linea-tiempo .hora {
+  display: block;
+  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.invitacion .linea-tiempo h3 {
+  margin: 0.2rem 0 0.4rem;
+  color: var(--cian);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.invitacion .linea-tiempo p {
+  margin: 0;
+  color: #8f9db5;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.invitacion .linea-tiempo .hito-destacado::before {
+  border-color: var(--dorado);
+  background: var(--dorado);
+  box-shadow: 0 0 14px rgba(230, 206, 130, 0.75);
+}
+
+.invitacion .linea-tiempo .hito-destacado .hora,
+.invitacion .linea-tiempo .hito-destacado h3 {
+  color: var(--dorado);
+}
+
+.invitacion .programa-lugar {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(184, 217, 255, 0.16);
+}
+
+.invitacion .programa-lugar .icono {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--cian);
+}
+
+.invitacion .programa-lugar h3 {
+  margin: 0 0 0.4rem;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.invitacion .programa-lugar p {
+  margin: 0;
+  color: #8f9db5;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+/* ---------- SECCIÓN 4: DRESS CODE Y ALIAS (clara con cuadrícula) ---------- */
+
+.invitacion .seccion-detalles {
+  padding: 5rem 1.25rem 5.5rem;
+  background-color: #f3f8fd;
+  background-image:
+    linear-gradient(rgba(70, 110, 190, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 110, 190, 0.1) 1px, transparent 1px);
+  background-size: 44px 44px;
+  color: var(--tinta);
+}
+
+.invitacion .seccion-detalles .contenido-invitacion {
+  width: min(100%, 34rem);
+}
+
+.invitacion .seccion-detalles .icono-grande {
+  color: var(--azul-tinta);
+}
+
+.invitacion .colores-reservados {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-top: 1.2rem;
+}
+
+.invitacion .color-reservado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gris-azul);
+  font-size: 0.8rem;
+}
+
+.invitacion .punto {
+  display: block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+}
+
+.invitacion .punto-azul   { background: #0b66d8; }
+.invitacion .punto-dorado { background: #e6c77a; }
+
+.invitacion .divisor-claro {
+  width: 100%;
+  margin: 3rem 0;
+  border: 0;
+  border-top: 1px solid #b9c9e6;
+}
+
+.invitacion .alias-fila {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.invitacion .alias-texto {
+  color: var(--tinta);
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+
+.invitacion .boton-icono {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  border: 1px solid #b9c9e6;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--azul-tinta);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.invitacion .boton-icono:hover {
+  transform: translateY(-2px);
+  background: var(--azul-tinta);
+  color: #fff;
+}
+
+.invitacion .boton-icono .icono {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* ---------- Botones y cierre (secciones con foto) ---------- */
+
+.invitacion .boton-confirmacion {
+  min-height: 48px;
+  padding: 0.9rem 1.8rem;
+  border: 1px solid var(--azul);
+  border-radius: 999px;
+  background: var(--azul);
+  color: var(--azul-noche);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(117, 174, 245, 0.2);
+  transition: 0.25s ease;
+}
+
+.invitacion .boton-confirmacion:hover {
+  transform: translateY(-2px);
+  background: transparent;
+  color: var(--azul-claro);
+}
+
+.invitacion .cierre-invitacion {
+  margin: 2rem 0 0;
+  color: var(--azul-claro);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.invitacion .volver-inicio {
+  display: block;
+  margin-top: 1.5rem;
+  color: #d9e6ff;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-shadow: 0 2px 8px #000;
+  transition: color 0.25s ease;
+}
+
+.invitacion .volver-inicio:hover {
+  color: var(--dorado);
+}
+
+/* ---------- Música y confirmación: menos espacio vacío ---------- */
+
+.invitacion .seccion-musica {
+  min-height: auto;
+  padding: 3.5rem 1.25rem;
+}
+
+.invitacion .seccion-confirmacion {
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 4rem clamp(1.25rem, 8vw, 5rem);
+  text-align: left;
+}
+
+.invitacion .seccion-confirmacion .contenido-invitacion {
+  display: grid;
+  gap: 2rem;
+  width: min(100%, 62rem);
+}
+
+.invitacion .confirmar-texto .nombre-maia {
+  margin: 0.2rem 0 0 -0.6rem;
+  font-size: clamp(5rem, 22vw, 8.5rem);
+  line-height: 1.1;
+}
+
+.invitacion .confirmar-texto .quince {
+  margin: 0.2rem 0 0;
+}
+
+.invitacion .confirmar-texto .frase-invitacion {
+  max-width: 30rem;
+  margin: 1rem 0 0;
+}
+
+.invitacion .confirmar-tarjeta {
+  padding: 1.7rem 1.5rem;
+  border: 1px solid rgba(205, 222, 255, 0.32);
+  border-radius: 1.25rem;
+  background: rgba(5, 16, 37, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 34px rgba(0, 4, 14, 0.35);
+}
+
+.invitacion .etiqueta-vidrio {
+  margin: 0 0 1.1rem;
+  color: var(--azul-claro);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.invitacion .confirmar-datos {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.invitacion .confirmar-datos li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #e9f1ff;
+  font-size: 0.88rem;
+}
+
+.invitacion .confirmar-datos .icono {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--cian);
+}
+
+.invitacion .confirmar-datos a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 217, 255, 0.45);
+  text-underline-offset: 0.25em;
+}
+
+.invitacion .confirmar-tarjeta .boton-confirmacion {
+  width: 100%;
+}
+
+.invitacion .nota-vidrio {
+  margin: 1rem 0 0;
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+.invitacion .confirmar-pie {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.invitacion .confirmar-pie .cierre-invitacion {
+  margin: 0;
+}
+
+.invitacion .confirmar-pie .volver-inicio {
+  margin-top: 0.5rem;
+}
+
+/* ---------- Foco visible ---------- */
+
+.invitacion a:focus-visible,
+.invitacion button:focus-visible {
+  outline: 2px solid var(--dorado);
+  outline-offset: 3px;
+}
+
+/* ---------- Pantallas grandes ---------- */
+
+@media (min-width: 900px) {
+  .invitacion .seccion-datos {
+    padding-block: 6rem;
+  }
+
+  .invitacion .seccion-datos .contenido-invitacion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    width: min(100%, 62rem);
+  }
+
+  .invitacion .programa {
+    margin-top: 0;
+  }
+
+  .invitacion .seccion-confirmacion .contenido-invitacion {
+    grid-template-columns: 1.2fr 1fr;
+    column-gap: 4rem;
+    align-items: center;
+  }
+
+  .invitacion .confirmar-pie {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(184, 217, 255, 0.2);
+  }
+
+  .invitacion .confirmar-pie .volver-inicio {
+    margin-top: 0;
+  }
+}
+
+/* ---------- Móviles ---------- */
+
+@media (max-width: 480px) {
+  .invitacion .seccion-musica {
+    padding: 3rem 1rem;
+  }
+
+  .invitacion .seccion-confirmacion {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .invitacion .seccion-presentacion {
+    padding: 6rem 1.25rem 5rem;
+  }
+
+  .invitacion .hero-links {
+    gap: 0.8rem;
+  }
+
+  .invitacion .hero-links a {
+    font-size: 0.58rem;
+  }
+
+  .invitacion .cuenta-regresiva {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .invitacion .frase-invitacion {
+    font-size: 1.1rem;
+  }
+
+  .invitacion .hero-scroll {
+    font-size: 0.52rem;
+  }
+}
+
+/* ---------- Movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .invitacion .contenido-invitacion {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .invitacion .mariposa {
+    animation: none;
+  }
+
+  .invitacion *,
+  .invitacion *::before,
+  .invitacion *::after {
+    transition: none !important;
+  }
+}

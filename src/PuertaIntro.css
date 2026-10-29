@@ -1,0 +1,246 @@
+.pi-root {
+  /* Zona de las hojas dentro de la imagen (en %). Ajustalo si el recorte no coincide */
+  --izq: 28.8%;
+  --der: 28.2%;
+  --arriba: 22%;
+  --abajo: 12.8%;
+  --centro: 50%;
+  --blue: 40, 110, 255;
+
+  /* Velocidades (más segundos = más lento) */
+  --zoom: 9s;            /* el acercamiento de la cámara */
+  --hojas: 4.4s;         /* lo que tardan en abrirse las puertas */
+  --retardo-hojas: 1.2s; /* espera antes de que empiecen a abrirse */
+
+  position: fixed;
+  inset: 0;
+  background: #020618;
+  overflow: hidden;
+  font-family: Georgia, serif;
+}
+.pi-root * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+.pi-root { cursor: pointer; }
+
+/* Fondo difuminado con la misma imagen (se ve en los costados de pantallas anchas) */
+.pi-bg {
+  position: absolute;
+  inset: -8%;
+  background: var(--img) center / cover no-repeat;
+  filter: blur(28px) brightness(0.75) saturate(1.1);
+}
+
+/* Escenario con proporción 2:3 (como tu imagen).
+   Siempre ocupa todo el alto de la pantalla:
+   - en celular (pantalla alta y angosta) la imagen llena la pantalla y se recortan un poco los costados
+   - en compu/tablet sobra ancho y los costados se rellenan con el fondo difuminado */
+.pi-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 66.667vh;  /* respaldo */
+  width: 66.667dvh;
+  transform: translateX(-50%);
+  perspective: 1400px;
+  /* Sin recorte (overflow visible): al acercarse, la imagen crece y ocupa
+     toda la pantalla en lugar de quedar en una columna */
+  container-type: inline-size; /* para que el texto escale con la puerta */
+}
+
+/* Bordes laterales suaves para que la imagen se funda con el fondo difuminado.
+   Desaparecen apenas empieza el acercamiento. */
+.pi-stage::before,
+.pi-stage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 7%;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+.pi-stage::before { left: 0;  background: linear-gradient(to right, rgb(6, 16, 56), rgba(6, 16, 56, 0)); }
+.pi-stage::after  { right: 0; background: linear-gradient(to left,  rgb(6, 16, 56), rgba(6, 16, 56, 0)); }
+.pi-stage.pi-go::before,
+.pi-stage.pi-go::after { opacity: 0; }
+
+/* Pantallas angostas (celular, tablet vertical, ventana angosta):
+   la imagen se AGRANDA hasta llenar toda la pantalla, sin bordes.
+   Se recorta un poco de lo que sobra (flores de los costados o piso/arco),
+   pero la puerta queda completa en el centro. */
+@media (max-aspect-ratio: 1/1) {
+  .pi-stage {
+    top: 50%;
+    bottom: auto;
+    width: max(100vw, 66.667vh);     /* respaldo */
+    width: max(100vw, 66.667dvh);
+    height: max(100vh, 150vw);       /* respaldo */
+    height: max(100dvh, 150vw);
+    transform: translate(-50%, -50%);
+  }
+  .pi-stage::before,
+  .pi-stage::after { display: none; }
+}
+.pi-cam {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 56%;
+  transition: transform var(--zoom) cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+.pi-layer,
+.pi-leaf {
+  position: absolute;
+  inset: 0;
+  background: var(--img) center / 100% 100% no-repeat;
+}
+
+/* Interior brillante */
+.pi-glow {
+  position: absolute;
+  left: var(--izq);
+  right: var(--der);
+  top: var(--arriba);
+  bottom: var(--abajo);
+  border-radius: 50% 50% 0 0 / 14% 14% 0 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(200, 230, 255, 0.95) 0%,
+    rgba(90, 160, 255, 0.9) 25%,
+    rgba(var(--blue), 0.85) 55%,
+    #0a1f6e 100%
+  );
+  box-shadow: 0 0 60px 20px rgba(var(--blue), 0.7);
+  opacity: 0;
+  transition: opacity 1.6s ease 0.8s;
+}
+.pi-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* brillo fijo (sin pulso: el pulso se notaba como un mini destello al final) */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 60%);
+}
+
+/* Hojas de la puerta */
+.pi-leaf {
+  backface-visibility: hidden;
+  transition: transform var(--hojas) cubic-bezier(0.6, 0.05, 0.3, 1) var(--retardo-hojas);
+}
+.pi-l {
+  clip-path: inset(var(--arriba) var(--centro) var(--abajo) var(--izq));
+  transform-origin: var(--izq) 50%;
+}
+.pi-r {
+  clip-path: inset(var(--arriba) var(--der) var(--abajo) var(--centro));
+  transform-origin: calc(100% - var(--der)) 50%;
+}
+
+/* Estado: abriendo */
+.pi-go .pi-cam { transform: scale(4.6); }
+.pi-go .pi-glow { opacity: 1; }
+.pi-go .pi-l { transform: rotateY(105deg); }
+.pi-go .pi-r { transform: rotateY(-105deg); }
+
+/* Texto titilante en el medio de la puerta */
+.pi-hint {
+  position: absolute;
+  left: var(--izq);
+  right: var(--der);
+  top: 64%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  text-align: center;
+  color: #f2f8ff;
+  font-size: 14px;          /* respaldo */
+  font-size: 4.2cqw;
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px rgba(160, 210, 255, 1),
+    0 0 20px rgba(var(--blue), 1),
+    0 0 36px rgba(var(--blue), 0.9);
+  animation: pi-blink 1.8s ease-in-out infinite;
+  pointer-events: none;
+  transition: opacity 0.6s;
+}
+@keyframes pi-blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+.pi-go .pi-hint { opacity: 0; animation: none; }
+
+/* Destello: blanco/celeste parejo para que no se vean bloques de color */
+.pi-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f2f8ff 55%, #dcedff 100%);
+  transition: opacity 1.6s ease-out; /* salida: se va apagando y revela la portada */
+}
+.pi-flash.pi-on {
+  opacity: 1;
+  transition: opacity 0.9s ease-in-out; /* entrada: suave, sin golpe (más segundos = más suave) */
+}
+
+/* Portada: aparece de golpe, ya tapada por el destello, sin desvanecerse
+   (así no se cruza con el fondo oscuro) */
+.pi-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.pi-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  padding: 14px 30px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #fff;
+  background: rgba(10, 30, 110, 0.55);
+  backdrop-filter: blur(6px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(var(--blue), 0.8);
+}
+
+/* Pantalla temporal cuando todavía no hay portada / invitación */
+.pi-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #e6f0ff;
+  font-size: clamp(20px, 6vw, 32px);
+  letter-spacing: 0.15em;
+  background: radial-gradient(circle at 50% 40%, #3f73e8 0%, #1b3fbf 45%, #0a1f6e 100%);
+}
+
+/* Destello que se apaga por encima de tu portada (mismo blanco que .pi-flash) */
+.pi-flash-salida {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f2f8ff 55%, #dcedff 100%);
+  animation: pi-salida 1.6s ease-out forwards;
+}
+@keyframes pi-salida {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
