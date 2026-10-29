@@ -115,13 +115,25 @@ function Mariposas() {
 
 /* Franja que separa una sección de otra */
 function Separador() {
-  return (
-    <div className="separador-seccion" aria-hidden="true">
+  /* En celular el texto no entra en una sola línea, así que la franja
+     se desliza de costado (por eso el contenido está dos veces). */
+  const contenido = (
+    <>
       <span>MIS QUINCE AÑOS</span>
       <Icono nombre="star" />
       <span>UNA NOCHE PARA VIVIRLA A PLENO</span>
       <Icono nombre="star" />
       <span>28 NOVIEMBRE 2026</span>
+      <Icono nombre="star" />
+    </>
+  );
+
+  return (
+    <div className="separador-seccion" aria-hidden="true">
+      <div className="separador-pista">
+        <div className="separador-grupo">{contenido}</div>
+        <div className="separador-grupo separador-copia">{contenido}</div>
+      </div>
     </div>
   );
 }
@@ -158,7 +170,7 @@ function Invitacion() {
     function actualizarCuentaRegresiva() {
       const restante = Math.max(
         0,
-        new Date(FECHA_FIESTA).getTime() - Date.now()
+        new Date(FECHA_FIESTA).getTime() - Date.now(),
       );
 
       setTiempoRestante({
@@ -192,7 +204,7 @@ function Invitacion() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     secciones.forEach((s) => observador.observe(s));
@@ -229,12 +241,12 @@ function Invitacion() {
       {/* 1. PRESENTACIÓN (fondo2.jpg) */}
       <section className="seccion-invitacion seccion-foto seccion-presentacion">
         <nav className="hero-nav" aria-label="Navegación">
-          <span className="hero-logo" aria-hidden="true">M.</span>
+          <span className="hero-logo" aria-hidden="true">
+            M.
+          </span>
           <div className="hero-links">
             <a href="#datos-fiesta">LA FIESTA</a>
-            <a href="#confirmacion">
-              CONFIRMAR ASISTENCIA <span aria-hidden="true">↗</span>
-            </a>
+            <a href="#confirmacion">CONFIRMAR ASISTENCIA</a>
           </div>
         </nav>
 
@@ -267,13 +279,9 @@ function Invitacion() {
             type="button"
             onClick={() => abrirWhatsApp(MSJ_CONFIRMAR)}
           >
-            ¡VOY A ESTAR! <span aria-hidden="true">↗</span>
+            ¡VOY A ESTAR!
           </button>
         </div>
-
-        <a className="hero-scroll" href="#cuenta-regresiva">
-          QUE EMPIECE LA CUENTA REGRESIVA <span aria-hidden="true">↓</span>
-        </a>
       </section>
 
       <Separador />
@@ -308,7 +316,9 @@ function Invitacion() {
               <span>MINUTOS</span>
             </div>
             <div className="bloque-tiempo">
-              <strong>{String(tiempoRestante.segundos).padStart(2, "0")}</strong>
+              <strong>
+                {String(tiempoRestante.segundos).padStart(2, "0")}
+              </strong>
               <span>SEGUNDOS</span>
             </div>
           </div>
@@ -358,7 +368,7 @@ function Invitacion() {
               rel="noreferrer"
             >
               <Icono nombre="pin" />
-              CÓMO LLEGAR
+              CÓMO LLEGAR 
               <Icono nombre="flecha" />
             </a>
           </div>
@@ -382,7 +392,9 @@ function Invitacion() {
               <li className="hito-destacado">
                 <span className="hora">21:30 hs</span>
                 <h3>Entra la quinceañera</h3>
-                <p>Se apagan las luces y empieza la magia. Mejor vivirlo en vivo.</p>
+                <p>
+                  Se apagan las luces y empieza la magia. Mejor vivirlo en vivo.
+                </p>
               </li>
               <li>
                 <span className="hora">05:00 hs</span>
@@ -395,7 +407,9 @@ function Invitacion() {
               <Icono nombre="pin" />
               <div>
                 <h3>Nos encontramos en el salón</h3>
-                <p>Te dejé la ubicación para que llegues directo a la fiesta.</p>
+                <p>
+                  Te dejé la ubicación para que llegues directo a la fiesta.
+                </p>
               </div>
             </div>
           </div>
@@ -437,8 +451,8 @@ function Invitacion() {
             <p className="eyebrow">UN DETALLE CON AMOR</p>
             <h2 className="titulo-claro">El mejor regalo es que estés.</h2>
             <p className="texto-claro">
-              Si querés hacerme un regalo, podés hacerlo por transferencia
-              o dejar un sobre en el salón.
+              Si querés hacerme un regalo, podés hacerlo por transferencia o
+              dejar un sobre en el salón.
             </p>
 
             <div className="alias-fila">
@@ -473,8 +487,8 @@ function Invitacion() {
           <h2 className="titulo-seccion">¿Qué tema no puede faltar?</h2>
 
           <p className="frase-invitacion">
-            Contame qué canción te hace bailar y la sumo a la lista
-            de la fiesta.
+            Contame qué canción te hace bailar y la sumo a la lista de la
+            fiesta.
           </p>
 
           <button
@@ -482,7 +496,7 @@ function Invitacion() {
             type="button"
             onClick={() => abrirWhatsApp(MSJ_MUSICA)}
           >
-            Recomendar canciones <span aria-hidden="true">↗</span>
+            Recomendar canciones 
           </button>
         </div>
       </section>
@@ -504,8 +518,8 @@ function Invitacion() {
             <h2 className="nombre-maia">Maia</h2>
             <p className="quince">Mis quince años</p>
             <p className="frase-invitacion">
-              Tu presencia hará que esta noche sea todavía más especial.
-              ¡Te espero para celebrar juntos!
+              Tu presencia hará que esta noche sea todavía más especial. ¡Te
+              espero para celebrar juntos!
             </p>
           </div>
 
@@ -529,7 +543,7 @@ function Invitacion() {
               type="button"
               onClick={() => abrirWhatsApp(MSJ_CONFIRMAR)}
             >
-              Confirmar asistencia <span aria-hidden="true">↗</span>
+              Confirmar asistencia 
             </button>
 
             <p className="nota-vidrio">
@@ -549,7 +563,7 @@ function Invitacion() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              Volver al comienzo ↑
+              Volver al comienzo 
             </a>
           </div>
         </div>

@@ -22,10 +22,17 @@ import "./PuertaIntro.css";
 const T_DESTELLO = 5400; // empieza el destello suave, cuando la puerta ya casi está abierta
 const T_CONTENIDO = 6400; // con la pantalla ya blanca (0,9 s después), aparece tu contenido
 
-export default function PuertaIntro({ puerta, children, precargar = [] }) {
+export default function PuertaIntro({
+  puerta,
+  children,
+  precargar = [],
+  musica,          // ruta de la canción (se reproduce en bucle al tocar la puerta)
+  volumen = 0.8,   // 0 a 1
+}) {
   // cerrada -> abriendo -> destello -> listo (destello apagándose) -> fin
   const [fase, setFase] = useState("cerrada");
   const timers = useRef([]);
+  const audio = useRef(null);
 
   // Precarga de imágenes para que no se trabe la animación ni parpadee tu portada
   useEffect(() => {
@@ -33,12 +40,35 @@ export default function PuertaIntro({ puerta, children, precargar = [] }) {
       const img = new Image();
       img.src = src;
     });
-    return () => timers.current.forEach(clearTimeout);
+    return () => {
+      timers.current.forEach(clearTimeout);
+      timers.current.forEach(clearInterval);
+      if (audio.current) audio.current.pause();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [puerta]);
 
+  // La música arranca con el toque del usuario (los navegadores no permiten
+  // reproducir audio solos), suena en bucle y sube de volumen de a poco.
+  const iniciarMusica = () => {
+    if (!musica) return;
+    const a = new Audio(musica);
+    a.loop = true;
+    a.volume = 0;
+    audio.current = a;
+    a.play().catch(() => {});
+    let v = 0;
+    const id = setInterval(() => {
+      v = Math.min(v + 0.04, volumen);
+      a.volume = v;
+      if (v >= volumen) clearInterval(id);
+    }, 100);
+    timers.current.push(id);
+  };
+
   const abrir = () => {
     if (fase !== "cerrada") return;
+    iniciarMusica();
     setFase("abriendo");
     timers.current.push(setTimeout(() => setFase("destello"), T_DESTELLO));
     timers.current.push(setTimeout(() => setFase("listo"), T_CONTENIDO));

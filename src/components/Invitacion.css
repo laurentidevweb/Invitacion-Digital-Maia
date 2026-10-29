@@ -99,27 +99,78 @@
 
 /* ---------- Separador entre secciones ---------- */
 
+/* En pantallas anchas se ve fijo y centrado, todo en una línea.
+   En celular no entra en una línea, así que la franja se desliza de costado. */
+
 .invitacion .separador-seccion {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem 0.9rem;
+  overflow: hidden;
   padding: 1.1rem 1rem;
   border-top: 1px solid rgba(184, 217, 255, 0.35);
   border-bottom: 1px solid rgba(230, 206, 130, 0.35);
   background: linear-gradient(90deg, #12285c, #1f3d86 50%, #12285c);
   color: #e9f1ff;
-  font-size: clamp(0.55rem, 2.3vw, 0.72rem);
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-align: center;
+}
+
+.invitacion .separador-pista {
+  display: flex;
+  justify-content: center;
+}
+
+.invitacion .separador-grupo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.9rem;
+  white-space: nowrap;
 }
 
 .invitacion .separador-seccion .icono {
   width: 1em;
   height: 1em;
   color: var(--dorado);
+}
+
+/* Pantallas anchas: una sola vez y sin la última estrella */
+.invitacion .separador-copia {
+  display: none;
+}
+
+.invitacion .separador-grupo .icono:last-child {
+  display: none;
+}
+
+/* Celular: la franja se desliza sin parar (cambiá 26s para más lento/rápido) */
+@media (max-width: 720px) {
+  .invitacion .separador-seccion {
+    padding-inline: 0;
+  }
+
+  .invitacion .separador-pista {
+    width: max-content;
+    justify-content: flex-start;
+    animation: separador-deslizar 26s linear infinite;
+  }
+
+  .invitacion .separador-grupo {
+    padding-right: 0.9rem;
+  }
+
+  .invitacion .separador-copia {
+    display: flex;
+  }
+
+  .invitacion .separador-grupo .icono:last-child {
+    display: block;
+  }
+}
+
+@keyframes separador-deslizar {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ---------- Separador delicado: línea · mariposa · línea ---------- */
@@ -249,7 +300,7 @@
   margin: 1.25rem auto 2rem;
   color: #d5e1f1;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  font-size: clamp(1.15rem, 8vw, 1.4rem);
   font-style: italic;
   line-height: 1.85;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
@@ -344,6 +395,7 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-shadow: 0 2px 8px #000;
+  margin-bottom: 2rem;
 }
 
 .invitacion .hero-linea {
@@ -381,12 +433,13 @@
 
 .invitacion .hero-fecha span {
   color: var(--dorado);
+  font-size: 1.1rem;
 }
 
 .invitacion .hero-texto {
   margin: 0 0 1.8rem;
   color: var(--texto-suave);
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.9;
   text-shadow: 0 2px 8px #000;
 }
@@ -479,7 +532,7 @@
 .invitacion .nota-claro {
   margin: 0.9rem 0 0;
   color: var(--gris-azul);
-  font-size: 0.78rem;
+  font-size: 1rem;
 }
 
 /* Decoración de las esquinas */
@@ -828,7 +881,7 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--gris-azul);
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .invitacion .punto {
@@ -1136,6 +1189,24 @@
 
   .invitacion .mariposa {
     animation: none;
+  }
+
+  /* Sin movimiento: la franja queda quieta y centrada (puede ocupar dos líneas) */
+  .invitacion .separador-pista {
+    width: 100%;
+    animation: none;
+  }
+
+  .invitacion .separador-grupo {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+    white-space: normal;
+  }
+
+  .invitacion .separador-copia,
+  .invitacion .separador-grupo .icono:last-child {
+    display: none;
   }
 
   .invitacion *,

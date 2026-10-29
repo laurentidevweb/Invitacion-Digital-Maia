@@ -8,8 +8,8 @@ import hero from "./assets/hero.png";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <PuertaIntro puerta={puerta} precargar={[hero]}>
+    <PuertaIntro puerta={puerta} precargar={[hero]} musica="/musica.mp3">
       <App />
     </PuertaIntro>
-  </StrictMode>
+  </StrictMode>,
 );

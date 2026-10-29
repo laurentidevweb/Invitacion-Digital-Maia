@@ -39,7 +39,7 @@ function App() {
               className="boton-entrada"
               onClick={() => setMostrarInvitacion(true)}
             >
-              DESCUBRÍ LA INVITACIÓN <span>↗</span>
+              DESCUBRÍ LA INVITACIÓN 
             </button>
           </section>
 
