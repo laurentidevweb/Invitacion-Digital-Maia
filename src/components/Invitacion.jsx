@@ -156,6 +156,33 @@ function SeparadorMariposa() {
   );
 }
 
+function Foto({
+  n,
+  className = "",
+  horizontal = false,
+  prioridad = false,
+  posicion = "center 25%",
+}) {
+  return (
+    <div
+      className={`foto-bloque ${horizontal ? "foto-horizontal" : ""} ${className}`}
+    >
+      <img
+        src={`/foto${n}.JPG`}
+        alt="Maia"
+        width={horizontal ? 2576 : 1717}
+        height={horizontal ? 1717 : 2576}
+        loading={prioridad ? "eager" : "lazy"}
+        decoding="async"
+        style={{ objectPosition: posicion }}
+        onError={(e) => {
+          e.currentTarget.parentElement.style.display = "none";
+        }}
+      />
+    </div>
+  );
+}
+
 function Invitacion() {
   const [tiempoRestante, setTiempoRestante] = useState({
     dias: 0,
@@ -282,6 +309,8 @@ function Invitacion() {
             ¡VOY A ESTAR!
           </button>
         </div>
+        {/* 1. PRESENTACIÓN: al final de la sección, después del </div> de contenido-invitacion */}
+        <Foto n={1} className="foto-hero" prioridad />
       </section>
 
       <Separador />
@@ -323,6 +352,8 @@ function Invitacion() {
             </div>
           </div>
         </div>
+        {/* 2. CUENTA REGRESIVA: después del </div> de contenido-invitacion */}
+        <Foto n={3} horizontal posicion="center 40%" />
       </section>
 
       {/* 3. DATOS DE LA FIESTA (oscuro) */}
@@ -368,7 +399,7 @@ function Invitacion() {
               rel="noreferrer"
             >
               <Icono nombre="pin" />
-              CÓMO LLEGAR 
+              CÓMO LLEGAR
               <Icono nombre="flecha" />
             </a>
           </div>
@@ -423,56 +454,59 @@ function Invitacion() {
         <Icono nombre="sparkles" className="esquina esquina-1" />
         <Icono nombre="star" className="esquina esquina-2" />
 
-        <div className="contenido-invitacion">
-          <div className="bloque-claro" id="dress-code">
-            <Icono nombre="shirt" className="icono-grande" />
-            <p className="eyebrow">DRESS CODE</p>
-            <h2 className="titulo-claro">Elegante</h2>
-            <p className="texto-claro">
-              Tu mejor look, listo para la pista.
-              <br />
-              Estos colores están reservados para la quinceañera:
-            </p>
-            <div className="colores-reservados">
-              <span className="color-reservado">
-                <i className="punto punto-azul" aria-hidden="true" /> Azul
-              </span>
-              <span className="color-reservado">
-                <i className="punto punto-dorado" aria-hidden="true" /> Dorado
-              </span>
+        <div className="fila-foto">
+          <Foto n={5} posicion="center 25%" />
+
+          <div className="contenido-invitacion">
+            <div className="bloque-claro" id="dress-code">
+              <Icono nombre="shirt" className="icono-grande" />
+              <p className="eyebrow">DRESS CODE</p>
+              <h2 className="titulo-claro">Elegante</h2>
+              <p className="texto-claro">
+                Tu mejor look, listo para la pista.
+                <br />
+                Estos colores están reservados para la quinceañera:
+              </p>
+              <div className="colores-reservados">
+                <span className="color-reservado">
+                  <i className="punto punto-azul" aria-hidden="true" /> Azul
+                </span>
+                <span className="color-reservado">
+                  <i className="punto punto-dorado" aria-hidden="true" /> Dorado
+                </span>
+              </div>
+              <p className="nota-claro">Te pedimos no usarlos esa noche.</p>
             </div>
-            <p className="nota-claro">Te pedimos no usarlos esa noche.</p>
-          </div>
 
-          <hr className="divisor-claro" />
+            <hr className="divisor-claro" />
 
-          <div className="bloque-claro" id="regalo">
-            <Icono nombre="gift" className="icono-grande" />
-            <p className="eyebrow">UN DETALLE CON AMOR</p>
-            <h2 className="titulo-claro">El mejor regalo es que estés.</h2>
-            <p className="texto-claro">
-              Si querés hacerme un regalo, podés hacerlo por transferencia o
-              dejar un sobre en el salón.
-            </p>
+            <div className="bloque-claro" id="regalo">
+              <Icono nombre="gift" className="icono-grande" />
+              <p className="eyebrow">UN DETALLE CON AMOR</p>
+              <h2 className="titulo-claro">El mejor regalo es que estés.</h2>
+              <p className="texto-claro">
+                Si querés hacerme un regalo, podés hacerlo por transferencia o
+                dejar un sobre en el salón.
+              </p>
 
-            <div className="alias-fila">
-              <span className="alias-texto">{ALIAS}</span>
-              <button
-                className="boton-icono"
-                type="button"
-                onClick={copiarAlias}
-                aria-label="Copiar alias"
-              >
-                <Icono nombre="copy" />
-              </button>
+              <div className="alias-fila">
+                <span className="alias-texto">{ALIAS}</span>
+                <button
+                  className="boton-icono"
+                  type="button"
+                  onClick={copiarAlias}
+                  aria-label="Copiar alias"
+                >
+                  <Icono nombre="copy" />
+                </button>
+              </div>
+              <p className="nota-claro" aria-live="polite">
+                {copiado ? "¡Alias copiado!" : "Tocá el ícono para copiarlo"}
+              </p>
             </div>
-            <p className="nota-claro" aria-live="polite">
-              {copiado ? "¡Alias copiado!" : "Tocá el ícono para copiarlo"}
-            </p>
           </div>
         </div>
       </section>
-
       <Separador />
 
       {/* 5. MÚSICA (fondo3.jpg) */}
@@ -480,7 +514,14 @@ function Invitacion() {
         id="musica"
         className="seccion-invitacion seccion-foto seccion-musica"
       >
+        {/* 5. MÚSICA: justo debajo de <Mariposas /> */}
         <Mariposas />
+        <div className="fila-foto">
+          <div className="contenido-invitacion">
+            {/* ...todo igual que ahora... */}
+          </div>
+          <Foto n={2} posicion="center 30%" />
+        </div>
         <div className="contenido-invitacion">
           <Icono nombre="music" className="icono-grande icono-cian" />
           <p className="subtitulo">HAGAMOS LA PLAYLIST JUNTOS</p>
@@ -496,7 +537,7 @@ function Invitacion() {
             type="button"
             onClick={() => abrirWhatsApp(MSJ_MUSICA)}
           >
-            Recomendar canciones 
+            Recomendar canciones
           </button>
         </div>
       </section>
@@ -508,8 +549,10 @@ function Invitacion() {
         id="confirmacion"
         className="seccion-invitacion seccion-foto seccion-confirmacion"
       >
+        {/* 6. CONFIRMACIÓN: justo debajo de <Mariposas /> */}
         <Mariposas />
         <div className="contenido-invitacion">
+          <Foto n={4} posicion="center 40%" />
           <div className="confirmar-texto">
             <p className="hero-eyebrow">
               <span className="hero-linea" aria-hidden="true" />
@@ -543,7 +586,7 @@ function Invitacion() {
               type="button"
               onClick={() => abrirWhatsApp(MSJ_CONFIRMAR)}
             >
-              Confirmar asistencia 
+              Confirmar asistencia
             </button>
 
             <p className="nota-vidrio">
@@ -563,7 +606,7 @@ function Invitacion() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              Volver al comienzo 
+              Volver al comienzo
             </a>
           </div>
         </div>
