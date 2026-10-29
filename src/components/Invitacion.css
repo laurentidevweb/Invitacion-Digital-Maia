@@ -1526,3 +1526,12 @@
 .invitacion .seccion-detalles .foto-bloque::after {
   border-color: rgba(185, 154, 76, 0.55);
 }
+
+/* ---------- Playlist: foto más larga en celular ---------- */
+
+@media (max-width: 820px) {
+  .invitacion .seccion-musica .fila-foto > .foto-bloque {
+    aspect-ratio: 3 / 4;
+    max-height: 80svh;
+  }
+}
